@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0 0;
+            padding: 0 0;
+            font-family: Calibri, sans-serif;
+        }
+        body {
+            background-color: darkslategrey;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            padding: 20px;
+            max-width: 24rem;
+            margin: 4rem auto;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .grid-item {
+            border: 1px solid #ccc;
+            text-align: center;
+            width: 6rem;
+            height: 6rem;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .grid-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        .grid-checkbox {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            accent-color: black;
+        }
+        @media only screen and (max-width: 550px) {
+            .grid-container {
+                max-width: 20rem;
+                margin: 7rem auto;
+            }
+            .grid-item {
+                width: 4rem;
+                height: 4rem;
+                font-size: large !important;
+            }
+            button {
+            max-width: 12rem !important;
+            margin: -6rem auto !important;
+            font-size: large !important;
+            padding: 0.6rem 3rem !important;
+            
+        }
+        }
+        button {
+            max-width: 16rem;
+            display: block;
+            margin: -4rem auto;
+            font-size: x-large;
+            padding: 1rem 4rem;
+            border: none;
+            background-color: cadetblue;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: rgb(167, 119, 119);
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <!-- Row Titles -->
+        <div class="grid-item grid-title"><p>Farzad</p></div>
+        <div class="grid-item grid-title"><span>0 0</span></div>
+        <div class="grid-item grid-title"><span>0 1</span></div>
+        <div class="grid-item grid-title"><span>1 1</span></div>
+        <div class="grid-item grid-title"><span>1 0</span></div>
+
+        <!-- Column Titles -->
+        <div class="grid-item grid-title"><span>0 0</span></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="0"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="1"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="2"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="3"></div>
+
+
+        <div class="grid-item grid-title"><span>0 1</span></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="4"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="5"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="6"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="7"></div>
+
+
+        <div class="grid-item grid-title"><span>1 1</span></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="8"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="9"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="10"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="11"></div>
+
+
+        <div class="grid-item grid-title">1 0</div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="12"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="13"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="14"></div>
+        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="15"></div>
+
+    </div>
+    <button id="calculate">محاسبه</button>
+    <button id="debugerbitch" style="display: none;"></button>
+</body>
+<script>
+
+    const cell_0 = document.getElementById('0');
+    const cell_1 = document.getElementById('1');
+    const cell_2 = document.getElementById('2');
+    const cell_3 = document.getElementById('3');
+    const cell_4 = document.getElementById('4');
+    const cell_5 = document.getElementById('5');
+    const cell_6 = document.getElementById('6');
+    const cell_7 = document.getElementById('7');
+    const cell_8 = document.getElementById('8');
+    const cell_9 = document.getElementById('9');
+    const cell_10 = document.getElementById('10');
+    const cell_11 = document.getElementById('11');
+    const cell_12 = document.getElementById('12');
+    const cell_13 = document.getElementById('13');
+    const cell_14 = document.getElementById('14');
+    const cell_15 = document.getElementById('15');
+    
+
+    var all_cells_raw = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    const debugerbitch = document.getElementById("debugerbitch")
+
+    cell_0.addEventListener("click", function() {
+        if (cell_0.checked) {
+            all_cells_raw[0] = 1
+        }
+        if (!cell_0.checked) {
+            all_cells_raw[0] = 0
+        }
+    })
+    cell_1.addEventListener("click", function() {
+        if (cell_1.checked) {
+            all_cells_raw[1] = 1
+        }
+        if (!cell_1.checked) {
+            all_cells_raw[1] = 0
+        }
+    })
+    cell_2.addEventListener("click", function() {
+        if (cell_2.checked) {
+            all_cells_raw[2] = 1
+        }
+        if (!cell_2.checked) {
+            all_cells_raw[2] = 0
+
+        }
+    })
+    cell_3.addEventListener("click", function() {
+        if (cell_3.checked) {
+            all_cells_raw[3] = 1
+        }
+        if (!cell_3.checked) {
+            all_cells_raw[3] = 0
+        }
+    })
+    cell_4.addEventListener("click", function() {
+        if (cell_4.checked) {
+            all_cells_raw[4] = 1
+        }
+        if (!cell_4.checked) {
+            all_cells_raw[4] = 0
+        }
+    })
+    cell_5.addEventListener("click", function() {
+        if (cell_5.checked) {
+            all_cells_raw[5] = 1
+        }
+        if (!cell_5.checked) {
+            all_cells_raw[5] = 0
+        }
+    })
+    cell_6.addEventListener("click", function() {
+        if (cell_6.checked) {
+            all_cells_raw[6] = 1
+        }
+        if (!cell_6.checked) {
+            all_cells_raw[6] = 0
+        }
+    })
+    cell_7.addEventListener("click", function() {
+        if (cell_7.checked) {
+            all_cells_raw[7] = 1
+        }
+        if (!cell_7.checked) {
+            all_cells_raw[7] = 0
+        }
+    })
+    cell_8.addEventListener("click", function() {
+        if (cell_8.checked) {
+            all_cells_raw[8] = 1
+        }
+        if (!cell_8.checked) {
+            all_cells_raw[8] = 0
+        }
+    })
+    cell_9.addEventListener("click", function() {
+        if (cell_9.checked) {
+            all_cells_raw[9] = 1
+        }
+        if (!cell_9.checked) {
+            all_cells_raw[9] = 0
+        }
+    })
+    cell_10.addEventListener("click", function() {
+        if (cell_10.checked) {
+            all_cells_raw[10] = 1
+        }
+        if (!cell_10.checked) {
+            all_cells_raw[10] = 0
+        }
+    })
+    cell_11.addEventListener("click", function() {
+        if (cell_11.checked) {
+            all_cells_raw[11] = 1
+        }
+        if (!cell_11.checked) {
+            all_cells_raw[11] = 0
+        }
+    })
+    cell_12.addEventListener("click", function() {
+        if (cell_12.checked) {
+            all_cells_raw[12] = 1
+        }
+        if (!cell_12.checked) {
+            all_cells_raw[12] = 0
+        }
+    })
+    cell_13.addEventListener("click", function() {
+        if (cell_13.checked) {
+            all_cells_raw[13] = 1
+        }
+        if (!cell_13.checked) {
+            all_cells_raw[13] = 0
+        }
+    })
+    cell_14.addEventListener("click", function() {
+        if (cell_14.checked) {
+            all_cells_raw[14] = 1
+        }
+        if (!cell_14.checked) {
+            all_cells_raw[14] = 0
+        }
+    })
+    cell_15.addEventListener("click", function() {
+        if (cell_15.checked) {
+            all_cells_raw[15] = 1
+        }
+        if (!cell_15.checked) {
+            all_cells_raw[15] = 0
+        }
+    })
+
+    function large_table_generator() {
+        var large_table = []
+        var large_table_index = 0;
+        for (let i = 0; i <= 1; i++) {
+            for (let j = 0; j <= 3; j++) {
+                for (let k = 0; k <= 1; k++) {
+                    for (let l = 0; l <= 3; l++) {
+                        var large_table_cell = {"content": all_cells_raw[l + 4*j],"id": (l + 4*j), "row": (j + 4*i), "column": (l + 4*k), "valid": false}
+                        large_table[large_table_index] = large_table_cell
+                        console.log (large_table_cell)
+                        large_table_index ++;
+                    }
+                }
+            }
+        }
+        return large_table
+    }
+
+    const calculate = document.getElementById("calculate")
+    function calculator() {
+        console.log("hello world")
+        console.log(large_table_generator())
+    }
+    calculate.addEventListener("click", calculator)
+
+</script>
+</html>
