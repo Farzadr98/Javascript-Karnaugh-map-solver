@@ -315,23 +315,52 @@
         id_validations[id]["is_valid"] = bool 
     }
 
+    function additional_groups_remover(an_array_of_arrays) {
+        // Reorder nested arrays based on length
+        an_array_of_arrays.sort((a, b) => a.length - b.length);
+
+        if (an_array_of_arrays.length > 0) {
+            for (let i = 0; i < an_array_of_arrays.length; i++) {
+                // Select the current nested array
+                let selected_array = an_array_of_arrays[i];
+                // Combine all members from unselected arrays
+                let unselectedMembers = [];
+                for (let j = 0; j < an_array_of_arrays.length; j++) {
+                    if (j !== i) {
+                        unselectedMembers = unselectedMembers.concat(an_array_of_arrays[j]);
+                    }
+                }
+                // Check if all members of selected array are found in unselected members
+                let allMembersFound = true;
+                for (let k = 0; k < selected_array.length; k++) {
+                    if (!unselectedMembers.includes(selected_array[k])) {
+                        allMembersFound = false;
+                        break;
+                    }
+                }
+                // If all members found, delete the selected array and break out of loop
+                if (allMembersFound) {
+                    an_array_of_arrays.splice(i, 1);
+                    // Decrement i to account for the removed element
+                    i--;
+                }
+            }
+        }
+        return an_array_of_arrays;
+    }
+
+
+
+
     function forward_row_group(large_table, id_array) {
 
-        var previous_was_zero = true
         var group_id = 0
         var groups = []
+        previous_was_zero = true
 
         for (let i = 0; i <= 7; i++) {
 
             if (large_table[8*i]["content"] === 1 && previous_was_zero === false) {
-
-                if (groups[group_id] && groups[group_id].length === 3) {
-                    let removed_cell = groups[group_id].pop()
-                    group_id++;
-                    groups[group_id] = []
-                    groups[group_id].push(removed_cell)
-                    group_id++;
-                }
 
                 group_id ++;
             }
@@ -341,43 +370,42 @@
                 let id = large_table[j + 8*i]["id"]
                 large_table_content = large_table[j + 8*i]["content"]
 
-                if (large_table_content === 1) {
-                    
-                    if (groups[group_id] && groups[group_id].indexOf(id) === -1) {
+                if (large_table[j + 8*i]["content"] === 1 && id_array[id]["is_valid"] === true) {
 
-                        groups[group_id].push(id);
-                        id_array[id]["is_valid"] = false
-                        previous_was_zero = false
+                    previous_was_zero = false
+                    id_array[id]["is_valid"] = false
 
-                    } else if (! groups[group_id]) {
-
+                    if (!groups[group_id]) {
                         groups[group_id] = []
-                        groups[group_id].push(id);
-                        id_array[id]["is_valid"] = false
-                        previous_was_zero = false
-
                     }
 
-                } else if (large_table_content === 0) {
+                    groups[group_id].push(large_table[j + 8*i]["id"])
 
-                    if (previous_was_zero === false) {
-
-                        if (groups[group_id] && groups[group_id].length === 3) {
-                            let removed_cell = groups[group_id].pop()
-                            group_id++;
-                            groups[group_id] = []
-                            groups[group_id].push(removed_cell)
-                            group_id++;
-                        }
-                        group_id ++;
-                        previous_was_zero = true
-
+                    let neighbor = 1
+                    while(large_table[j + 8*i + neighbor]["content"] === 1 && (neighbor + j) <= 8 && neighbor <= 3) {
+                        
+                        groups[group_id].push(large_table[j + 8*i + neighbor]["id"])
+                        neighbor ++;
                     }
+
+                    if (groups[group_id] && groups[group_id].length === 3) {
+                        let removed_cell = groups[group_id].pop()
+                        group_id++;
+                        groups[group_id] = []
+                        groups[group_id].push(removed_cell)
+                    }
+
+                    group_id ++;
+                } else {
+
+                    previous_was_zero = true
 
                 }
-            }    
-        }
 
+            }
+
+        }
+                
         for(let i = 0; i < groups.length; i++) {
             let emptyArr
             if (groups[i] === emptyArr) {
@@ -385,6 +413,7 @@
             }
         }
 
+        groups = additional_groups_remover(groups)
         return groups
     }
 
@@ -421,6 +450,30 @@
 
     }
 
+    function removeDuplicates(arrays) {
+        for (let i = 0; i < arrays.length; i++) {
+            const currentArray = arrays[i];
+            let found = false;
+            
+            for (let j = 0; j < arrays.length; j++) {
+                if (i !== j) {
+                    const otherArray = arrays[j];
+                    if (currentArray.every(element => otherArray.includes(element))) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (found) {
+                arrays.splice(i, 1);
+                i--; // Adjust index after removing element
+            }
+        }
+        
+        return arrays;
+    }
+
     function downside_vertical_groups(large_table,) {
 
     }
@@ -431,7 +484,9 @@
         large_table = large_table_generator()
         id_array = id_array_generator()
         groups = forward_row_group(large_table, id_array)
-        console.log(backward_row_group(large_table, id_array, groups))
+        // groups = backward_row_group(large_table, id_array, groups)
+        // groups = removeDuplicates(groups)
+        console.log(groups)
     }
     calculate.addEventListener("click", calculator)
 
