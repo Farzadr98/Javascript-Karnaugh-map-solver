@@ -304,12 +304,15 @@
 
     function id_array_generator() {
         id_validations = []
-        for (let i = 0; i <= 15; i++) {
-            var id_validations_member = {"id": i, "is_valid": true, "group_id": []}
-            id_validations[i] = id_validations_member
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                var id_validations_member = {"id": j + 4*i, "row": i, "column": j, "is_valid": true}
+                id_validations.push(id_validations_member);
+            }
         }
-        return id_validations
+        return id_validations;
     }
+
 
     function id_array_modifier(id_validations, id, bool) {
         id_validations[id]["is_valid"] = bool 
@@ -474,8 +477,87 @@
         return arrays;
     }
 
-    function downside_vertical_groups(large_table,) {
+    function downside_vertical_groups(large_table, groups, id_array) {
+        if (groups.length > 0) {
+            more_detailed_groups = []
+            for (let i = 0; i < groups.length; i ++) {
+                if (groups[i]) {
+                    selected_group = groups[i]
+                    selected_large_table_cells = []
+                    if (selected_group.length > 0) {
+                        outerLoop: for (let j = 0; j < selected_group.length; j ++) {
 
+                            selected_group_cell = selected_group[j]
+
+                            for (let k = 0; k < large_table.length; k++) {
+                                if (large_table[k]["id"] === selected_group_cell) {
+                                    selected_large_table_cells.push(large_table[k])
+                                    continue outerLoop
+                                }
+                            }
+                        }
+                    }
+                    more_detailed_groups.push(selected_large_table_cells)
+                }
+            }
+
+            if (more_detailed_groups && more_detailed_groups.length > 0) {
+
+                let updated_more_detailed_groups = []
+                
+                for (let i = 0; i < more_detailed_groups.length; i ++) {
+
+                    let current_group = more_detailed_groups[i]
+
+                    let looping = true
+
+                    let neighbor = 1
+
+                    while (looping) {
+
+                        let conditions_to_be_met = more_detailed_groups[i].length
+
+                        let conditions_met = 0
+
+                        let new_group = []
+
+                        for (let j = 0; j < more_detailed_groups[i].length; j++) {
+
+                            let current_cell_column = more_detailed_groups[i][j]["column"]
+
+                            let current_cell_row = more_detailed_groups[i][j]["row"]
+
+                            let under_cell_row = current_cell_row + neighbor
+
+                            for (let k = 0; k < large_table.length; k++) {
+
+                                if (large_table[k]["row"] === under_cell_row && large_table[k]["column"] === current_cell_column && large_table[k]["content"] === 1) {
+                                    conditions_met += 1
+                                    new_group.push(large_table[k])
+                                    break;
+                                }
+
+                            }
+
+                        }
+
+                        if (conditions_met === conditions_to_be_met) {
+
+                            current_group = current_group.concat(new_group)
+                            neighbor ++;
+
+                        } else {
+                            looping = false
+                        }
+                    }
+
+                    console.log(current_group)
+
+                }
+
+                
+            } 
+        }
     }
 
     const calculate = document.getElementById("calculate")
@@ -484,9 +566,8 @@
         large_table = large_table_generator()
         id_array = id_array_generator()
         groups = forward_row_group(large_table, id_array)
-        // groups = backward_row_group(large_table, id_array, groups)
-        // groups = removeDuplicates(groups)
-        console.log(groups)
+        // console.log(groups)
+        downside_vertical_groups(large_table, groups, id_array)
     }
     calculate.addEventListener("click", calculator)
 
