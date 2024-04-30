@@ -145,6 +145,7 @@
     
 
     var all_cells_raw = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    
     const debugerbitch = document.getElementById("debugerbitch")
 
     cell_0.addEventListener("click", function() {
@@ -277,6 +278,30 @@
         }
     })
 
+    var special_situation = false
+
+    function checkArray(arr) {
+        // Check if array is empty
+        if (arr.length === 0) {
+            return -1; // Return -1 for empty array (undefined)
+        }
+
+        // Check if all elements are 0
+        if (arr.every(elem => elem === 0)) {
+            special_situation = true
+            return 0;
+        }
+
+        // Check if all elements are 1
+        if (arr.every(elem => elem === 1)) {
+            special_situation = true
+            return 1;
+        }
+
+        // If neither all 0s nor all 1s
+        return -1;
+    }
+
     function large_table_generator() {
         var large_table = []
         var large_table_index = 0;
@@ -365,22 +390,25 @@
             return power;
         }
 
-        // Iterate through each nested array
-        for (let i = 0; i < arrays.length; i++) {
-            const nestedArray = arrays[i];
-            const originalLength = nestedArray.length;
+        if (arrays && arrays.length > 0) {
+            for (let i = 0; i < arrays.length; i++) {
+                const nestedArray = arrays[i];
+                const originalLength = nestedArray.length;
 
-            // Determine the desired length (nearest power of 2)
-            const desiredLength = nearestPowerOf2(originalLength);
+                // Determine the desired length (nearest power of 2)
+                const desiredLength = nearestPowerOf2(originalLength);
 
-            // Trim the nested array if needed
-            if (originalLength > desiredLength) {
-                const trimmedArray = nestedArray.slice(0, desiredLength);
-                arrays[i] = trimmedArray;
+                // Trim the nested array if needed
+                if (originalLength > desiredLength) {
+                    const trimmedArray = nestedArray.slice(0, desiredLength);
+                    arrays[i] = trimmedArray;
+                }
             }
-        }
 
-        return arrays;
+            return arrays;
+        }
+        
+        return []
     }
 
 
@@ -450,19 +478,23 @@
     }
 
     function removeDuplicates(arrays) {
-        // Helper function to remove duplicates from an array
-        function removeDuplicates(array) {
-            return Array.from(new Set(array));
+        if (arrays && arrays.length > 0) {
+            // Helper function to remove duplicates from an array
+            function removeDuplicates(array) {
+                return Array.from(new Set(array));
+            }
+
+            // Iterate through each nested array
+            for (let i = 0; i < arrays.length; i++) {
+                const nestedArray = arrays[i];
+                const uniqueArray = removeDuplicates(nestedArray);
+                arrays[i] = uniqueArray;
+            }
+
+            return arrays;
         }
 
-        // Iterate through each nested array
-        for (let i = 0; i < arrays.length; i++) {
-            const nestedArray = arrays[i];
-            const uniqueArray = removeDuplicates(nestedArray);
-            arrays[i] = uniqueArray;
-        }
-
-        return arrays;
+        return []
     }
 
     function more_detailed_groups_generator(large_table, groups) {
@@ -674,25 +706,107 @@
         return arr;
     }
 
+    function findCommonElements(arrays) {
+        if (!arrays || !Array.isArray(arrays) || arrays.length === 0) {
+            return [];
+        }
+
+        const firstArray = arrays[0];
+
+        const commonElements = firstArray.filter((element) => {
+            return arrays.every((array) => array.includes(element));
+        });
+
+        return commonElements;
+    }
+
+    function translator(more_detailed_groups) {
+
+        let rows = [
+            ["A'", "B'"], ["A'", "B"], ["A", "B"], ["A", "B'"]
+        ]
+        let cols = [
+            ["C'", "D'"], ["C'", "D"], ["C", "D"], ["C", "D'"]
+        ]
+
+        new_groups = []
+
+        for (let i = 0; i < more_detailed_groups.length; i ++) {
+
+            let translated_rows = []
+            let translated_cols = []
+
+            for (let j = 0; j < more_detailed_groups[i].length; j ++) {
+
+                translated_rows.push(rows[more_detailed_groups[i][j]["row"]])
+                translated_cols.push(cols[more_detailed_groups[i][j]["column"]])
+
+            }
+
+            new_groups.push([translated_rows, translated_cols])
+
+        }
+
+        let final_output = []
+
+        for (let i = 0; i < new_groups.length; i ++) {
+            rows = new_groups[i][0]
+            cols = new_groups[i][1]
+
+            rows = findCommonElements(rows)
+            cols = findCommonElements(cols)
+            
+            let this_group_final = ''
+
+            for (let j = 0; j < rows.length; j++) {
+                this_group_final = this_group_final.concat(rows[j])
+            }
+            for (let j = 0; j < cols.length; j++) {
+                this_group_final = this_group_final.concat(cols[j])
+            }
+
+            final_output.push(this_group_final)
+        }
+
+        let translated_final_output = ''
+
+        for (let i = 0; i < final_output.length; i ++) {
+            translated_final_output = translated_final_output.concat(" + " + final_output[i])
+        }
+
+        translated_final_output = translated_final_output.substring(3)
+        console.log(translated_final_output)
+        
+    }
+
     const calculate = document.getElementById("calculate")
 
     function calculator() {
 
-        large_table = large_table_generator()
-        id_array = id_array_generator()
-        groups = forward_row_group(large_table, id_array)
-        new_id_array = downside_vertical_groups(large_table, groups, id_array)
-        new_id_array = adjustArrays(new_id_array)
-        new_id_array = additional_groups_remover(new_id_array)
-        new_id_array = removeDuplicates(new_id_array)
+        special_situation = false
+        let result = checkArray(all_cells_raw)
 
-        
-        new_id_array = upside_vertical_groups(new_id_array)
-        new_id_array = removeDuplicates(new_id_array)
-        new_id_array = adjustArrays(new_id_array)
-        new_id_array = reorderNestedArrays(new_id_array)
-        new_id_array = additional_groups_remover(new_id_array)
-        console.log(new_id_array)
+        if (!special_situation) {
+            large_table = large_table_generator()
+            id_array = id_array_generator()
+            groups = forward_row_group(large_table, id_array)
+            new_id_array = downside_vertical_groups(large_table, groups, id_array)
+            new_id_array = adjustArrays(new_id_array)
+            new_id_array = additional_groups_remover(new_id_array)
+            new_id_array = removeDuplicates(new_id_array)
+
+            new_id_array = upside_vertical_groups(new_id_array)
+            new_id_array = removeDuplicates(new_id_array)
+            new_id_array = adjustArrays(new_id_array)
+            new_id_array = reorderNestedArrays(new_id_array)
+            new_id_array = additional_groups_remover(new_id_array)
+
+            new_id_array = more_detailed_groups_generator(large_table, new_id_array)
+
+            translator(new_id_array)
+        } else {
+            console.log(result)
+        }
 
     }
 
