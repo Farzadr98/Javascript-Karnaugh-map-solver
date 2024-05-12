@@ -1,5 +1,8 @@
 /* Main Style */
 
+:root {
+    color-scheme: light only;
+}
 * {
     box-sizing: border-box;
     margin: 0 0;
