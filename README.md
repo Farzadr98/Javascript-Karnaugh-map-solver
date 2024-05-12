@@ -4,4 +4,4 @@ This is a JavaScript algorithm that solves the 4x4 Karnaugh map. It is expandabl
 
 The license and terms of use are detailed within the LICENSE file. Here’s a brief overview:
 
-The product is free of charge for use, copying, modification, merging, publishing, and distribution, provided that the developer is credited. Permission is not granted for selling copies of the software.
+The product is free of charge for use, copying, modification, merging, publishing, and distribution, provided that the developer is credited.
