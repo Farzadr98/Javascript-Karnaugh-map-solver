@@ -9,6 +9,7 @@
             margin: 0 0;
             padding: 0 0;
             font-family: Calibri, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         body {
             background-color: darkslategrey;
@@ -19,7 +20,7 @@
             grid-template-rows: repeat(5, 1fr);
             padding: 20px;
             max-width: 24rem;
-            margin: 4rem auto;
+            margin: 2rem auto;
             justify-content: center;
             align-content: center;
         }
@@ -42,48 +43,199 @@
         }
 
         .grid-checkbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 100%;
             height: 100%;
             cursor: pointer;
             accent-color: black;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: all 0.15s ease-in-out;
+            user-select: none;
+        }
+        .grid-checkbox-checked {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.64);
+        }
+        footer {
+            width: 100%;
+            height: auto;
+            padding: 2rem 0;
+            font-size: large;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+        }
+        footer span {
+            text-align: center;
+            color: rgb(152, 152, 152);
+
+        }
+        footer span a {
+            color: lightgray;
         }
         @media only screen and (max-width: 550px) {
             .grid-container {
                 max-width: 20rem;
-                margin: 7rem auto;
+                margin: 7rem auto 3rem auto;
             }
             .grid-item {
                 width: 4rem;
                 height: 4rem;
                 font-size: large !important;
             }
-            button {
+            .grid-checkbox {
+                font-size: small;
+            }
+            .mainBtn {
             max-width: 12rem !important;
             margin: -6rem auto !important;
             font-size: large !important;
-            padding: 0.6rem 3rem !important;
-            
+            padding: 0.6rem 2rem !important;
+            gap: 0.5rem;
+            }
+            footer span {
+                margin-top: 5rem;
+                font-size: small;
+            }
         }
+        @media only screen and (max-width: 350px) {
+            .grid-container {
+                max-width: 16rem;
+                margin: 7rem auto 3rem auto;
+            }
+            .grid-item {
+                width: 3.2rem;
+                height: 3.2rem;
+                font-size: large !important;
+            }
+            .grid-checkbox {
+                font-size: small;
+            }
+            .mainBtn {
+                max-width: 10rem !important;
+                margin: -6rem auto !important;
+                font-size: medium !important;
+                padding: 0.6rem 1.4rem !important;
+                gap: 0.5rem;
+            }
+            .button-container {
+                max-width: 15rem !important;
+            }
+            .grid-title {
+                font-size: medium !important;
+            }
+            .grid-title {
+                font-size: 0.85rem !important;
+            }
+            .grid-checkbox {
+                font-size: 0.7rem !important;
+            }
+            .grid-checkbox-checked {
+                box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.64);
+            }
         }
-        button {
-            max-width: 16rem;
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            max-width: 18rem;
+            margin: 0 auto;
+            box-sizing: border-box;
+            gap: 2rem;
+        }
+        .mainBtn {
+            max-width: 9rem;
             display: block;
-            margin: -4rem auto;
             font-size: x-large;
-            padding: 1rem 4rem;
+            padding: 1rem 2rem;
             border: none;
-            background-color: cadetblue;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
+            box-sizing: border-box;
         }
-        button:hover {
-            background-color: rgb(167, 119, 119);
+        .mainBtn:hover {
             transition: all 0.3s ease-in-out;
+            box-shadow: 0px 0px 9px 2px rgba(255,255,255,0.2);
+        }
+        #calculate {
+            background-color: cadetblue;
+        }
+        #clear {
+            background-color: rgb(167, 119, 119);
         }
     </style>
 </head>
 <body>
+    <!-- ------------------------------------------------------------------------------------------------------------- -->
+    <div class="popup-container" id="popup">
+        <div class="content">
+            <div><h2 id="final-content"></h2></div>
+            <div><button id="closer">باشه</button></div>
+        </div>
+    </div>
+    <style>
+
+        .popup-container {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 998;
+            padding: 2rem;
+            transition: all 0.3s ease-in-out;
+        }
+        .show {
+            display: block !important;
+            transition: all 0.3s ease-in-out;
+        }
+        .content {
+            display: flex;
+            max-width: 25rem;
+            flex-direction: column;
+            margin: 12rem auto;
+            background-color: #2F4F4F;
+            color: whitesmoke;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0px 0px 20px 2px rgba(255,255,255,0.05);
+            transition: all 0.3s ease-in-out;
+        }
+        .content h2 {
+            font-size: large;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.25rem;
+            line-height: 1.5rem;
+        }
+        .content button {
+            max-width: 7rem;
+            display: block;
+            margin-left: auto;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            font-size: large;
+            background-color: rgba(255, 255, 255, 0.18);
+            color: whitesmoke;
+            text-align: center;
+            border-radius: 0.4rem;
+            cursor: pointer;
+        }
+        .content button:active {
+            outline: none;
+        }
+    </style>
+    
+    <!-- ------------------------------------------------------------------------------------------------------------- -->
     <div class="grid-container">
         <!-- Row Titles -->
         <div class="grid-item grid-title"><p>Farzad</p></div>
@@ -94,36 +246,45 @@
 
         <!-- Column Titles -->
         <div class="grid-item grid-title"><span>0 0</span></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="0"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="1"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="2"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="3"></div>
+        <div class="grid-item"><span class="grid-checkbox" id="0">m [ 0 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="1">m [ 1 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="2">m [ 3 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="3">m [ 2 ]</span></div>
 
 
         <div class="grid-item grid-title"><span>0 1</span></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="4"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="5"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="6"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="7"></div>
+        <div class="grid-item"><span class="grid-checkbox" id="4">m [ 4 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="5">m [ 5 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="6">m [ 7 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="7">m [ 6 ]</span></div>
 
 
         <div class="grid-item grid-title"><span>1 1</span></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="8"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="9"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="10"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="11"></div>
+        <div class="grid-item"><span class="grid-checkbox" id="8">m [ 12 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="9">m [ 13 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="10">m [ 15 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="11">m [ 14 ]</span></div>
 
 
         <div class="grid-item grid-title">1 0</div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="12"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="13"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="14"></div>
-        <div class="grid-item"><input type="checkbox" class="grid-checkbox" id="15"></div>
+        <div class="grid-item"><span class="grid-checkbox" id="12">m [ 8 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="13">m [ 9 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="14">m [ 11 ]</span></div>
+        <div class="grid-item"><span class="grid-checkbox" id="15">m [ 10 ]</span></div>
 
     </div>
-    <button id="calculate">محاسبه</button>
-    <button id="debugerbitch" style="display: none;"></button>
+    <div class="button-container">
+        <button class="mainBtn" id="clear">تمیز کن</button>
+        <button class="mainBtn" id="calculate">محاسبه</button>
+    </div>
 </body>
+<footer>
+    <span>Developed by: <a target="_blank" href="mailto:rezameleknasab@gmail.com">Reza Maleknasab</a></h5>
+    <span hide-on-mobile>|</span>
+    <span><a href="#">Terms of use</a></span>
+    <span class="hide-on-mobile">|</span>
+    <span><a href="#">Github</a></span>
+</footer>
 <script>
 
     const cell_0 = document.getElementById('0');
@@ -146,136 +307,180 @@
 
     var all_cells_raw = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     
-    const debugerbitch = document.getElementById("debugerbitch")
 
     cell_0.addEventListener("click", function() {
-        if (cell_0.checked) {
-            all_cells_raw[0] = 1
-        }
-        if (!cell_0.checked) {
+        if (all_cells_raw[0] === 1) {
             all_cells_raw[0] = 0
+            cell_0.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[0] === 0) {
+            all_cells_raw[0] = 1
+            cell_0.classList.add("grid-checkbox-checked")
         }
     })
     cell_1.addEventListener("click", function() {
-        if (cell_1.checked) {
-            all_cells_raw[1] = 1
-        }
-        if (!cell_1.checked) {
+        if (all_cells_raw[1] === 1) {
             all_cells_raw[1] = 0
+            cell_1.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[1] === 0) {
+            all_cells_raw[1] = 1
+            cell_1.classList.add("grid-checkbox-checked")
         }
     })
     cell_2.addEventListener("click", function() {
-        if (cell_2.checked) {
-            all_cells_raw[2] = 1
-        }
-        if (!cell_2.checked) {
+        if (all_cells_raw[2] === 1) {
             all_cells_raw[2] = 0
-
+            cell_2.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[2] === 0) {
+            all_cells_raw[2] = 1
+            cell_2.classList.add("grid-checkbox-checked")
         }
     })
     cell_3.addEventListener("click", function() {
-        if (cell_3.checked) {
-            all_cells_raw[3] = 1
-        }
-        if (!cell_3.checked) {
+        if (all_cells_raw[3] === 1) {
             all_cells_raw[3] = 0
+            cell_3.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[3] === 0) {
+            all_cells_raw[3] = 1
+            cell_3.classList.add("grid-checkbox-checked")
         }
     })
     cell_4.addEventListener("click", function() {
-        if (cell_4.checked) {
-            all_cells_raw[4] = 1
-        }
-        if (!cell_4.checked) {
+        if (all_cells_raw[4] === 1) {
             all_cells_raw[4] = 0
+            cell_4.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[4] === 0) {
+            all_cells_raw[4] = 1
+            cell_4.classList.add("grid-checkbox-checked")
         }
     })
     cell_5.addEventListener("click", function() {
-        if (cell_5.checked) {
-            all_cells_raw[5] = 1
-        }
-        if (!cell_5.checked) {
+        if (all_cells_raw[5] === 1) {
             all_cells_raw[5] = 0
+            cell_5.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[5] === 0) {
+            all_cells_raw[5] = 1
+            cell_5.classList.add("grid-checkbox-checked")
         }
     })
     cell_6.addEventListener("click", function() {
-        if (cell_6.checked) {
-            all_cells_raw[6] = 1
-        }
-        if (!cell_6.checked) {
+        if (all_cells_raw[6] === 1) {
             all_cells_raw[6] = 0
+            cell_6.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[6] === 0) {
+            all_cells_raw[6] = 1
+            cell_6.classList.add("grid-checkbox-checked")
         }
     })
     cell_7.addEventListener("click", function() {
-        if (cell_7.checked) {
-            all_cells_raw[7] = 1
-        }
-        if (!cell_7.checked) {
+        if (all_cells_raw[7] === 1) {
             all_cells_raw[7] = 0
+            cell_7.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[7] === 0) {
+            all_cells_raw[7] = 1
+            cell_7.classList.add("grid-checkbox-checked")
         }
     })
     cell_8.addEventListener("click", function() {
-        if (cell_8.checked) {
-            all_cells_raw[8] = 1
-        }
-        if (!cell_8.checked) {
+        if (all_cells_raw[8] === 1) {
             all_cells_raw[8] = 0
+            cell_8.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[8] === 0) {
+            all_cells_raw[8] = 1
+            cell_8.classList.add("grid-checkbox-checked")
         }
     })
     cell_9.addEventListener("click", function() {
-        if (cell_9.checked) {
-            all_cells_raw[9] = 1
-        }
-        if (!cell_9.checked) {
+        if (all_cells_raw[9] === 1) {
             all_cells_raw[9] = 0
+            cell_9.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[9] === 0) {
+            all_cells_raw[9] = 1
+            cell_9.classList.add("grid-checkbox-checked")
         }
     })
     cell_10.addEventListener("click", function() {
-        if (cell_10.checked) {
-            all_cells_raw[10] = 1
-        }
-        if (!cell_10.checked) {
+        if (all_cells_raw[10] === 1) {
             all_cells_raw[10] = 0
+            cell_10.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[10] === 0) {
+            all_cells_raw[10] = 1
+            cell_10.classList.add("grid-checkbox-checked")
         }
     })
     cell_11.addEventListener("click", function() {
-        if (cell_11.checked) {
-            all_cells_raw[11] = 1
-        }
-        if (!cell_11.checked) {
+        if (all_cells_raw[11] === 1) {
             all_cells_raw[11] = 0
+            cell_11.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[11] === 0) {
+            all_cells_raw[11] = 1
+            cell_11.classList.add("grid-checkbox-checked")
         }
     })
     cell_12.addEventListener("click", function() {
-        if (cell_12.checked) {
-            all_cells_raw[12] = 1
-        }
-        if (!cell_12.checked) {
+        if (all_cells_raw[12] === 1) {
             all_cells_raw[12] = 0
+            cell_12.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[12] === 0) {
+            all_cells_raw[12] = 1
+            cell_12.classList.add("grid-checkbox-checked")
         }
     })
     cell_13.addEventListener("click", function() {
-        if (cell_13.checked) {
-            all_cells_raw[13] = 1
-        }
-        if (!cell_13.checked) {
+        if (all_cells_raw[13] === 1) {
             all_cells_raw[13] = 0
+            cell_13.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[13] === 0) {
+            all_cells_raw[13] = 1
+            cell_13.classList.add("grid-checkbox-checked")
         }
     })
     cell_14.addEventListener("click", function() {
-        if (cell_14.checked) {
-            all_cells_raw[14] = 1
-        }
-        if (!cell_14.checked) {
+        if (all_cells_raw[14] === 1) {
             all_cells_raw[14] = 0
+            cell_14.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[14] === 0) {
+            all_cells_raw[14] = 1
+            cell_14.classList.add("grid-checkbox-checked")
         }
     })
     cell_15.addEventListener("click", function() {
-        if (cell_15.checked) {
-            all_cells_raw[15] = 1
-        }
-        if (!cell_15.checked) {
+        if (all_cells_raw[15] === 1) {
             all_cells_raw[15] = 0
+            cell_15.classList.remove("grid-checkbox-checked")
+        } else if (all_cells_raw[15] === 0) {
+            all_cells_raw[15] = 1
+            cell_15.classList.add("grid-checkbox-checked")
         }
+    })
+
+    const clearBtn = document.getElementById("clear")
+
+    clearBtn.addEventListener("click", function() {
+        for (let i = 0; i < all_cells_raw.length; i ++) {
+            all_cells_raw[i] = 0
+        }
+        cell_0.classList.remove("grid-checkbox-checked")
+        cell_1.classList.remove("grid-checkbox-checked")
+        cell_2.classList.remove("grid-checkbox-checked")
+        cell_3.classList.remove("grid-checkbox-checked")
+        cell_4.classList.remove("grid-checkbox-checked")
+        cell_5.classList.remove("grid-checkbox-checked")
+        cell_6.classList.remove("grid-checkbox-checked")
+        cell_7.classList.remove("grid-checkbox-checked")
+        cell_8.classList.remove("grid-checkbox-checked")
+        cell_9.classList.remove("grid-checkbox-checked")
+        cell_10.classList.remove("grid-checkbox-checked")
+        cell_11.classList.remove("grid-checkbox-checked")
+        cell_12.classList.remove("grid-checkbox-checked")
+        cell_13.classList.remove("grid-checkbox-checked")
+        cell_14.classList.remove("grid-checkbox-checked")
+        cell_15.classList.remove("grid-checkbox-checked")
+    })
+
+    const popup = document.getElementById("popup")
+    const closer = document.getElementById("closer")
+    closer.addEventListener("click" , function() {
+        popup.classList.remove("show")
     })
 
     var special_situation = false
@@ -775,8 +980,15 @@
         }
 
         translated_final_output = translated_final_output.substring(3)
-        console.log(translated_final_output)
+        displayer(translated_final_output)
         
+    }
+
+    const final_content = document.getElementById("final-content")
+
+    function displayer(translated_final_output) {
+        final_content.innerText = translated_final_output
+        popup.classList.add("show")
     }
 
     const calculate = document.getElementById("calculate")
@@ -805,7 +1017,7 @@
 
             translator(new_id_array)
         } else {
-            console.log(result)
+            displayer(result)
         }
 
     }
