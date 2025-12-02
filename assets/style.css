@@ -15,14 +15,33 @@ body {
 }
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
     padding: 20px;
-    max-width: 24rem;
     margin: 2rem auto;
     justify-content: center;
     align-content: center;
 }
+
+/* 2x2 → 3 columns, 3 rows */
+.grid-2x2 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    max-width: 14rem;  /* tighter width */
+}
+
+/* 2x4 → 5 columns, 3 rows */
+.grid-2x4 {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    max-width: 24rem;
+}
+
+/* 4x4 → 5 columns, 5 rows */
+.grid-4x4 {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    max-width: 24rem;
+}
+
 
 .grid-item {
     border: 1px solid #ccc;
@@ -92,15 +111,19 @@ footer span a {
         font-size: small;
     }
     .mainBtn {
-    max-width: 12rem !important;
+    max-width: 15rem !important;
     margin: -6rem auto !important;
-    font-size: large !important;
-    padding: 0.6rem 2rem !important;
+    font-size: medium !important;
+    padding: 1rem 1.5rem !important;
     gap: 0.5rem;
     }
     footer span {
         margin-top: 5rem;
         font-size: small;
+    }
+    .button-container {
+        max-width: 20rem !important;
+        gap: 1rem !important;
     }
 }
 @media only screen and (max-width: 350px) {
@@ -119,9 +142,9 @@ footer span a {
     .mainBtn {
         max-width: 10rem !important;
         margin: -6rem auto !important;
-        font-size: medium !important;
-        padding: 0.6rem 1.4rem !important;
-        gap: 0.5rem;
+        font-size: small !important;
+        gap: 0.3rem;
+        padding: 1rem 1rem !important;
     }
     .button-container {
         max-width: 15rem !important;
@@ -144,13 +167,13 @@ footer span a {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    max-width: 18rem;
+    max-width: 300rem;
     margin: 0 auto;
     box-sizing: border-box;
     gap: 2rem;
 }
 .mainBtn {
-    max-width: 9rem;
+    max-width: 15rem;
     display: block;
     font-size: x-large;
     padding: 1rem 2rem;
@@ -202,6 +225,15 @@ footer span a {
     box-shadow: 0px 0px 20px 2px rgba(255,255,255,0.05);
     transition: all 0.3s ease-in-out;
 }
+.content-pro {
+
+}
+.content-pro h2 {
+    text-align: right;
+}
+.content-pro button {
+    margin-left: 0  !important;
+}
 .content h2 {
     font-size: large;
     margin-bottom: 1.5rem;
@@ -224,3 +256,26 @@ footer span a {
 .content button:active {
     outline: none;
 }
+.custom-select {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: whitesmoke;
+    border: none;
+    border-radius: 0.4rem;
+    font-size: medium;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.custom-select:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.custom-select option {
+    background-color: #2F4F4F;
+    color: whitesmoke;
+}
+
