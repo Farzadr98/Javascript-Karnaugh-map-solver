@@ -1,192 +1,50 @@
-const cell_0 = document.getElementById('0');
-const cell_1 = document.getElementById('1');
-const cell_2 = document.getElementById('2');
-const cell_3 = document.getElementById('3');
-const cell_4 = document.getElementById('4');
-const cell_5 = document.getElementById('5');
-const cell_6 = document.getElementById('6');
-const cell_7 = document.getElementById('7');
-const cell_8 = document.getElementById('8');
-const cell_9 = document.getElementById('9');
-const cell_10 = document.getElementById('10');
-const cell_11 = document.getElementById('11');
-const cell_12 = document.getElementById('12');
-const cell_13 = document.getElementById('13');
-const cell_14 = document.getElementById('14');
-const cell_15 = document.getElementById('15');
+var working_size = parseInt(localStorage.getItem('working_size'), 10);
+if (!working_size) {
+    working_size = 16;
+}
+
+const cells = {};
+var all_cells_raw = Array(working_size).fill(0);
 
 
-var all_cells_raw = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+function initCells(totalCells) {
+    for (let i = 0; i < totalCells; i++) {
+        const cellVarName = `cell_${i}`;
+        const cell = document.getElementById(`${i}`);
+        if (cell) {
+            cells[cellVarName] = cell;
+
+            cell.addEventListener('click', () => {
+                if (all_cells_raw[i] === 1) {
+                    all_cells_raw[i] = 0;
+                    cell.classList.remove("grid-checkbox-checked");
+                } else {
+                    all_cells_raw[i] = 1;
+                    cell.classList.add("grid-checkbox-checked");
+                }
+            });
+        } else {
+            console.warn(`${cellVarName} not found`);
+        }
+    }
+}
+initCells(working_size);
 
 
-cell_0.addEventListener("click", function() {
-    if (all_cells_raw[0] === 1) {
-        all_cells_raw[0] = 0
-        cell_0.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[0] === 0) {
-        all_cells_raw[0] = 1
-        cell_0.classList.add("grid-checkbox-checked")
-    }
-})
-cell_1.addEventListener("click", function() {
-    if (all_cells_raw[1] === 1) {
-        all_cells_raw[1] = 0
-        cell_1.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[1] === 0) {
-        all_cells_raw[1] = 1
-        cell_1.classList.add("grid-checkbox-checked")
-    }
-})
-cell_2.addEventListener("click", function() {
-    if (all_cells_raw[2] === 1) {
-        all_cells_raw[2] = 0
-        cell_2.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[2] === 0) {
-        all_cells_raw[2] = 1
-        cell_2.classList.add("grid-checkbox-checked")
-    }
-})
-cell_3.addEventListener("click", function() {
-    if (all_cells_raw[3] === 1) {
-        all_cells_raw[3] = 0
-        cell_3.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[3] === 0) {
-        all_cells_raw[3] = 1
-        cell_3.classList.add("grid-checkbox-checked")
-    }
-})
-cell_4.addEventListener("click", function() {
-    if (all_cells_raw[4] === 1) {
-        all_cells_raw[4] = 0
-        cell_4.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[4] === 0) {
-        all_cells_raw[4] = 1
-        cell_4.classList.add("grid-checkbox-checked")
-    }
-})
-cell_5.addEventListener("click", function() {
-    if (all_cells_raw[5] === 1) {
-        all_cells_raw[5] = 0
-        cell_5.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[5] === 0) {
-        all_cells_raw[5] = 1
-        cell_5.classList.add("grid-checkbox-checked")
-    }
-})
-cell_6.addEventListener("click", function() {
-    if (all_cells_raw[6] === 1) {
-        all_cells_raw[6] = 0
-        cell_6.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[6] === 0) {
-        all_cells_raw[6] = 1
-        cell_6.classList.add("grid-checkbox-checked")
-    }
-})
-cell_7.addEventListener("click", function() {
-    if (all_cells_raw[7] === 1) {
-        all_cells_raw[7] = 0
-        cell_7.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[7] === 0) {
-        all_cells_raw[7] = 1
-        cell_7.classList.add("grid-checkbox-checked")
-    }
-})
-cell_8.addEventListener("click", function() {
-    if (all_cells_raw[8] === 1) {
-        all_cells_raw[8] = 0
-        cell_8.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[8] === 0) {
-        all_cells_raw[8] = 1
-        cell_8.classList.add("grid-checkbox-checked")
-    }
-})
-cell_9.addEventListener("click", function() {
-    if (all_cells_raw[9] === 1) {
-        all_cells_raw[9] = 0
-        cell_9.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[9] === 0) {
-        all_cells_raw[9] = 1
-        cell_9.classList.add("grid-checkbox-checked")
-    }
-})
-cell_10.addEventListener("click", function() {
-    if (all_cells_raw[10] === 1) {
-        all_cells_raw[10] = 0
-        cell_10.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[10] === 0) {
-        all_cells_raw[10] = 1
-        cell_10.classList.add("grid-checkbox-checked")
-    }
-})
-cell_11.addEventListener("click", function() {
-    if (all_cells_raw[11] === 1) {
-        all_cells_raw[11] = 0
-        cell_11.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[11] === 0) {
-        all_cells_raw[11] = 1
-        cell_11.classList.add("grid-checkbox-checked")
-    }
-})
-cell_12.addEventListener("click", function() {
-    if (all_cells_raw[12] === 1) {
-        all_cells_raw[12] = 0
-        cell_12.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[12] === 0) {
-        all_cells_raw[12] = 1
-        cell_12.classList.add("grid-checkbox-checked")
-    }
-})
-cell_13.addEventListener("click", function() {
-    if (all_cells_raw[13] === 1) {
-        all_cells_raw[13] = 0
-        cell_13.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[13] === 0) {
-        all_cells_raw[13] = 1
-        cell_13.classList.add("grid-checkbox-checked")
-    }
-})
-cell_14.addEventListener("click", function() {
-    if (all_cells_raw[14] === 1) {
-        all_cells_raw[14] = 0
-        cell_14.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[14] === 0) {
-        all_cells_raw[14] = 1
-        cell_14.classList.add("grid-checkbox-checked")
-    }
-})
-cell_15.addEventListener("click", function() {
-    if (all_cells_raw[15] === 1) {
-        all_cells_raw[15] = 0
-        cell_15.classList.remove("grid-checkbox-checked")
-    } else if (all_cells_raw[15] === 0) {
-        all_cells_raw[15] = 1
-        cell_15.classList.add("grid-checkbox-checked")
-    }
-})
+const clearBtn = document.getElementById("clear");
+function clearCells(totalCells) {
+    all_cells_raw.fill(0);
 
-const clearBtn = document.getElementById("clear")
-
-clearBtn.addEventListener("click", function() {
-    for (let i = 0; i < all_cells_raw.length; i ++) {
-        all_cells_raw[i] = 0
+    for (let i = 0; i < totalCells; i++) {
+        const cell = cells[`cell_${i}`];
+        if (cell) {
+            cell.classList.remove("grid-checkbox-checked");
+        }
     }
-    cell_0.classList.remove("grid-checkbox-checked")
-    cell_1.classList.remove("grid-checkbox-checked")
-    cell_2.classList.remove("grid-checkbox-checked")
-    cell_3.classList.remove("grid-checkbox-checked")
-    cell_4.classList.remove("grid-checkbox-checked")
-    cell_5.classList.remove("grid-checkbox-checked")
-    cell_6.classList.remove("grid-checkbox-checked")
-    cell_7.classList.remove("grid-checkbox-checked")
-    cell_8.classList.remove("grid-checkbox-checked")
-    cell_9.classList.remove("grid-checkbox-checked")
-    cell_10.classList.remove("grid-checkbox-checked")
-    cell_11.classList.remove("grid-checkbox-checked")
-    cell_12.classList.remove("grid-checkbox-checked")
-    cell_13.classList.remove("grid-checkbox-checked")
-    cell_14.classList.remove("grid-checkbox-checked")
-    cell_15.classList.remove("grid-checkbox-checked")
-})
+}
+clearBtn.addEventListener("click", () => clearCells(working_size));
+
+
 
 const popup = document.getElementById("popup")
 const closer = document.getElementById("closer")
@@ -194,60 +52,230 @@ closer.addEventListener("click" , function() {
     popup.classList.remove("show")
 })
 
-var special_situation = false
 
+
+const change_popup = document.getElementById("change-size");
+const change_closer = document.getElementById("change-closer");
+const change_btn = document.getElementById("change-btn");
+change_closer.addEventListener("click" , function() {
+    change_popup.classList.remove("show")
+});
+change_btn.addEventListener("click" , function() {
+    change_popup.classList.add("show")
+})
+
+
+const dropdown = document.querySelector('.custom-select');
+
+let selectedSize = localStorage.getItem('userSize');
+if (selectedSize) {
+    dropdown.value = selectedSize;
+    createKMap(selectedSize)
+} else {
+    selectedSize = dropdown.value;
+}
+
+dropdown.addEventListener('change', () => {
+    selectedSize = dropdown.value;
+    localStorage.setItem('userSize', selectedSize);
+    console.log("Selected value saved:", selectedSize);
+    createKMap(selectedSize)
+});
+
+
+
+var special_situation = false
 function checkArray(arr) {
-    // Check if array is empty
     if (arr.length === 0) {
-        return -1; // Return -1 for empty array (undefined)
+        return -1;
     }
 
-    // Check if all elements are 0
     if (arr.every(elem => elem === 0)) {
         special_situation = true
         return 0;
     }
 
-    // Check if all elements are 1
+
     if (arr.every(elem => elem === 1)) {
         special_situation = true
         return 1;
     }
 
-    // If neither all 0s nor all 1s
+
     return -1;
 }
 
-function large_table_generator() {
-    var large_table = []
-    var large_table_index = 0;
-    for (let i = 0; i <= 1; i++) {
-
-        for (let j = 0; j <= 3; j++) {
-
-            for (let k = 0; k <= 1; k++) {
-
-                for (let l = 0; l <= 3; l++) {
-
-                    var large_table_cell = {"content": all_cells_raw[l + 4*j],"id": (l + 4*j), "row": (j + 4*i), "column": (l + 4*k)}
-                    large_table[large_table_index] = large_table_cell
-                    large_table_index ++;
-
-                }
-
-            }
-
-        }
-
-    }
-    return large_table
+function replaceUndefinedWithZero(arr) {
+    return arr.map(item => item === undefined ? 0 : item);
 }
+
+all_cells_raw = replaceUndefinedWithZero(all_cells_raw);
+
+
+function createKMap(size) {
+    const container = document.querySelector('.grid-container');
+    let html = "";
+
+    if (size === "twoxtwo") {
+        container.classList = "grid-container grid-2x2"
+
+        html = `
+            <div class="grid-item grid-title"><p>AB</p></div>
+            <div class="grid-item grid-title"><span>0</span></div>
+            <div class="grid-item grid-title"><span>1</span></div>
+
+            <div class="grid-item grid-title"><span>0</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="0">m [0]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="1">m [1]</span></div>
+
+            <div class="grid-item grid-title"><span>1</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="2">m [2]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="3">m [3]</span></div>
+        `;
+        working_size = 4;
+    }
+
+    else if (size === "twoxfour") {
+        container.classList = "grid-container grid-2x4";
+
+        html = `
+            <div class="grid-item grid-title"><p>ABC</p></div>
+            <div class="grid-item grid-title"><span>00</span></div>
+            <div class="grid-item grid-title"><span>01</span></div>
+            <div class="grid-item grid-title"><span>11</span></div>
+            <div class="grid-item grid-title"><span>10</span></div>
+
+            <div class="grid-item grid-title"><span>0</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="0">m [0]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="1">m [1]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="2">m [3]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="3">m [2]</span></div>
+
+            <div class="grid-item grid-title"><span>1</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="4">m [4]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="5">m [5]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="6">m [7]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="7">m [6]</span></div>
+        `;
+        working_size = 8;
+    }
+
+    else if (size === "fourxfour") {
+
+        container.classList = "grid-container grid-4x4";
+
+        html = `
+            <div class="grid-item grid-title"><p>AB \\ CD</p></div>
+            <div class="grid-item grid-title"><span>00</span></div>
+            <div class="grid-item grid-title"><span>01</span></div>
+            <div class="grid-item grid-title"><span>11</span></div>
+            <div class="grid-item grid-title"><span>10</span></div>
+
+            <div class="grid-item grid-title"><span>00</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="0">m [0]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="1">m [1]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="2">m [3]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="3">m [2]</span></div>
+
+            <div class="grid-item grid-title"><span>01</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="4">m [4]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="5">m [5]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="6">m [7]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="7">m [6]</span></div>
+
+            <div class="grid-item grid-title"><span>11</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="8">m [12]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="9">m [13]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="10">m [15]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="11">m [14]</span></div>
+
+            <div class="grid-item grid-title"><span>10</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="12">m [8]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="13">m [9]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="14">m [11]</span></div>
+            <div class="grid-item"><span class="grid-checkbox" id="15">m [10]</span></div>
+        `;
+        working_size = 16;
+    }
+
+    container.innerHTML = html;
+    initCells(working_size);
+    localStorage.setItem('working_size', working_size);
+    clearCells(working_size);
+}
+
+function large_table_generator() {
+
+    var working_size = parseInt(localStorage.getItem('working_size'), 10);
+    if (!working_size) {
+        working_size = 16;
+    }
+    all_cells_raw = replaceUndefinedWithZero(all_cells_raw);
+
+    const size = working_size;
+    let large_table = [];
+
+    if (size === 4) {
+
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const idx = (j % 2) + 2 * (i % 2);
+                large_table.push({
+                    content: all_cells_raw[idx],
+                    id: idx,
+                    row: i,
+                    column: j
+                });
+            }
+        }
+    }
+    else if (size === 8) {
+
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const idx = (j % 4) + 4 * (i % 2);
+                large_table.push({
+                    content: all_cells_raw[idx],
+                    id: idx,
+                    row: i,
+                    column: j
+                });
+            }
+        }
+    }
+    else if (size === 16) {
+
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const idx = (j % 4) + 4 * (i % 4);
+                large_table.push({
+                    content: all_cells_raw[idx],
+                    id: idx,
+                    row: i,
+                    column: j
+                });
+            }
+        }
+    }
+    else {
+        console.error("Unsupported working size:", size);
+    }
+
+    return large_table;
+}
+
+
 
 function id_array_generator() {
     id_validations = []
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            var id_validations_member = {"id": j + 4*i, "row": i, "column": j, "is_valid": true}
+            var id_validations_member = {
+                "id": j + 4*i,
+                "row": i,
+                "column": j,
+                "is_valid": true
+            }
             id_validations.push(id_validations_member);
         }
     }
@@ -255,9 +283,6 @@ function id_array_generator() {
 }
 
 
-function id_array_modifier(id_validations, id, bool) {
-    id_validations[id]["is_valid"] = bool 
-}
 
 function additional_groups_remover(an_array_of_arrays) {
 
@@ -265,16 +290,15 @@ function additional_groups_remover(an_array_of_arrays) {
 
     if (an_array_of_arrays.length > 0) {
         for (let i = 0; i < an_array_of_arrays.length; i++) {
-            // Select the current nested array
+
             let selected_array = an_array_of_arrays[i];
-            // Combine all members from unselected arrays
+
             let unselectedMembers = [];
             for (let j = 0; j < an_array_of_arrays.length; j++) {
                 if (j !== i) {
                     unselectedMembers = unselectedMembers.concat(an_array_of_arrays[j]);
                 }
             }
-            // Check if all members of selected array are found in unselected members
             let allMembersFound = true;
             for (let k = 0; k < selected_array.length; k++) {
                 if (!unselectedMembers.includes(selected_array[k])) {
@@ -282,10 +306,8 @@ function additional_groups_remover(an_array_of_arrays) {
                     break;
                 }
             }
-            // If all members found, delete the selected array and break out of loop
             if (allMembersFound) {
                 an_array_of_arrays.splice(i, 1);
-                // Decrement i to account for the removed element
                 i--;
             }
         }
@@ -297,7 +319,6 @@ function additional_groups_remover(an_array_of_arrays) {
 
 
 function adjustArrays(arrays) {
-    // Helper function to find the nearest power of 2 less than or equal to a given number
     function nearestPowerOf2(num) {
         let power = 1;
         while (power * 2 <= num) {
@@ -311,10 +332,8 @@ function adjustArrays(arrays) {
             const nestedArray = arrays[i];
             const originalLength = nestedArray.length;
 
-            // Determine the desired length (nearest power of 2)
             const desiredLength = nearestPowerOf2(originalLength);
 
-            // Trim the nested array if needed
             if (originalLength > desiredLength) {
                 const trimmedArray = nestedArray.slice(0, desiredLength);
                 arrays[i] = trimmedArray;
@@ -323,7 +342,7 @@ function adjustArrays(arrays) {
 
         return arrays;
     }
-    
+
     return []
 }
 
@@ -359,7 +378,7 @@ function forward_row_group(large_table, id_array) {
 
                 let neighbor = 1
                 while(large_table[j + 8*i + neighbor]["content"] === 1 && (neighbor + j) <= 8 && neighbor <= 3) {
-                    
+
                     groups[group_id].push(large_table[j + 8*i + neighbor]["id"])
                     neighbor ++;
                 }
@@ -381,7 +400,7 @@ function forward_row_group(large_table, id_array) {
         }
 
     }
-            
+
     for(let i = 0; i < groups.length; i++) {
         let emptyArr
         if (groups[i] === emptyArr) {
@@ -395,12 +414,10 @@ function forward_row_group(large_table, id_array) {
 
 function removeDuplicates(arrays) {
     if (arrays && arrays.length > 0) {
-        // Helper function to remove duplicates from an array
         function removeDuplicates(array) {
             return Array.from(new Set(array));
         }
 
-        // Iterate through each nested array
         for (let i = 0; i < arrays.length; i++) {
             const nestedArray = arrays[i];
             const uniqueArray = removeDuplicates(nestedArray);
@@ -441,7 +458,7 @@ function more_detailed_groups_generator(large_table, groups) {
 }
 
 function downside_vertical_groups(large_table, groups, id_array) {
-    
+
     if (groups.length > 0) {
 
         more_detailed_groups = more_detailed_groups_generator(large_table, groups)
@@ -449,7 +466,7 @@ function downside_vertical_groups(large_table, groups, id_array) {
         if (more_detailed_groups && more_detailed_groups.length > 0) {
 
             let updated_more_detailed_groups = []
-            
+
             for (let i = 0; i < more_detailed_groups.length; i ++) {
 
                 let current_group = more_detailed_groups[i]
@@ -516,7 +533,7 @@ function downside_vertical_groups(large_table, groups, id_array) {
 
             return new_id_array
 
-        } 
+        }
     }
 }
 
@@ -525,7 +542,7 @@ function upside_vertical_groups(groups) {
     if (groups && groups.length > 0) {
 
         more_detailed_groups = more_detailed_groups_generator(large_table, groups)
-    
+
         if (more_detailed_groups && more_detailed_groups.length > 0) {
 
             let updated_more_detailed_groups = []
@@ -607,12 +624,10 @@ function upside_vertical_groups(groups) {
 }
 
 function reorderNestedArrays(arr) {
-    // Helper function to reorder array elements from low to high
     function reorderArray(array) {
         return array.sort((a, b) => a - b);
     }
 
-    // Iterate through each nested array and reorder its elements
     for (let i = 0; i < arr.length; i++) {
         if (Array.isArray(arr[i])) {
             arr[i] = reorderArray(arr[i]);
@@ -637,63 +652,66 @@ function findCommonElements(arrays) {
 }
 
 function translator(more_detailed_groups) {
+    console.log("more_detailed_groups");
+    console.log(more_detailed_groups);
 
-    let rows = [
-        ["A'", "B'"], ["A'", "B"], ["A", "B"], ["A", "B'"]
-    ]
-    let cols = [
-        ["C'", "D'"], ["C'", "D"], ["C", "D"], ["C", "D'"]
-    ]
+    let rows, cols;
 
-    new_groups = []
+    if (working_size === 4) {
 
-    for (let i = 0; i < more_detailed_groups.length; i ++) {
+        rows = [["A'"], ["A"]];
+        cols = [["B'"], ["B"]];
+    }
+    else if (working_size === 8) {
 
-        let translated_rows = []
-        let translated_cols = []
+        rows = [["A'"], ["A"]];
+        cols = [["B'", "C'"], ["B'", "C"], ["B", "C"], ["B", "C'"]];
+    }
+    else if (working_size === 16) {
 
-        for (let j = 0; j < more_detailed_groups[i].length; j ++) {
-
-            translated_rows.push(rows[more_detailed_groups[i][j]["row"]])
-            translated_cols.push(cols[more_detailed_groups[i][j]["column"]])
-
-        }
-
-        new_groups.push([translated_rows, translated_cols])
-
+        rows = [["A'", "B'"], ["A'", "B"], ["A", "B"], ["A", "B'"]];
+        cols = [["C'", "D'"], ["C'", "D"], ["C", "D"], ["C", "D'"]];
+    }
+    else {
+        console.error("Unsupported working size:", working_size);
+        return;
     }
 
-    let final_output = []
+    let new_groups = [];
 
-    for (let i = 0; i < new_groups.length; i ++) {
-        rows = new_groups[i][0]
-        cols = new_groups[i][1]
+    for (let i = 0; i < more_detailed_groups.length; i++) {
+        let translated_rows = [];
+        let translated_cols = [];
 
-        rows = findCommonElements(rows)
-        cols = findCommonElements(cols)
-        
-        let this_group_final = ''
-
-        for (let j = 0; j < rows.length; j++) {
-            this_group_final = this_group_final.concat(rows[j])
-        }
-        for (let j = 0; j < cols.length; j++) {
-            this_group_final = this_group_final.concat(cols[j])
+        for (let j = 0; j < more_detailed_groups[i].length; j++) {
+            translated_rows.push(rows[more_detailed_groups[i][j]["row"]]);
+            translated_cols.push(cols[more_detailed_groups[i][j]["column"]]);
         }
 
-        final_output.push(this_group_final)
+        new_groups.push([translated_rows, translated_cols]);
     }
 
-    let translated_final_output = ''
+    let final_output = [];
 
-    for (let i = 0; i < final_output.length; i ++) {
-        translated_final_output = translated_final_output.concat(" + " + final_output[i])
+    for (let i = 0; i < new_groups.length; i++) {
+        let r = findCommonElements(new_groups[i][0]);
+        let c = findCommonElements(new_groups[i][1]);
+
+        let this_group_final = '';
+        for (let j = 0; j < r.length; j++) this_group_final += r[j];
+        for (let j = 0; j < c.length; j++) this_group_final += c[j];
+
+        final_output.push(this_group_final);
     }
 
-    translated_final_output = translated_final_output.substring(3)
-    displayer(translated_final_output)
-    
+    let translated_final_output = final_output.join(" + ");
+    if(translated_final_output.length === 0) {
+        translated_final_output = "1";
+    }
+    displayer(translated_final_output);
+    return translated_final_output;
 }
+
 
 const final_content = document.getElementById("final-content")
 
@@ -726,12 +744,136 @@ function calculator() {
 
         new_id_array = more_detailed_groups_generator(large_table, new_id_array)
 
-        translator(new_id_array)
+        let final_output = translator(new_id_array)
+
+        storeCalculation(final_output, all_cells_raw, working_size);
     } else {
         displayer(result)
     }
 
 }
 
-calculate.addEventListener("click", calculator)
+function storeCalculation(final_output, all_cells_raw, working_size) {
+    let history = JSON.parse(localStorage.getItem("calc_history")) || [];
 
+    const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
+    const newEntry = {
+        id: uniqueId,
+        final_output: final_output,
+        all_cells_raw: [...all_cells_raw], // clone array
+        working_size: working_size,
+        date: new Date().toISOString()
+    };
+
+    history.push(newEntry);
+
+    history.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if (history.length > 20) {
+        history = history.slice(0, 20);
+    }
+
+    localStorage.setItem("calc_history", JSON.stringify(history));
+
+    const select = document.getElementById("history_select");
+    if (select) {
+        select.innerHTML = "";
+
+        const blankOption = document.createElement("option");
+        blankOption.value = "";
+        blankOption.textContent = "-- Select history --";
+        select.appendChild(blankOption);
+
+        history.forEach(entry => {
+            const option = document.createElement("option");
+            option.value = entry.id;
+            option.textContent = entry.final_output;
+            select.appendChild(option);
+        });
+
+        select.value = "";
+    }
+}
+
+function loadHistoryOptions() {
+    const select = document.getElementById("history_select");
+    select.innerHTML = "";
+
+    const blankOption = document.createElement("option");
+    blankOption.value = "";
+    blankOption.textContent = "-- Select history --";
+    select.appendChild(blankOption);
+
+    let history = JSON.parse(localStorage.getItem("calc_history")) || [];
+
+    history.forEach(entry => {
+        let option = document.createElement("option");
+        option.value = entry.id;
+        option.textContent = entry.final_output;
+        select.appendChild(option);
+    });
+
+    select.value = "";
+}
+
+window.addEventListener("DOMContentLoaded", loadHistoryOptions);
+
+function sizeNameFromWorkingSize(ws) {
+    if (ws === 4) return "twoxtwo";
+    if (ws === 8) return "twoxfour";
+    return "fourxfour"; // default for 16 and fallback
+}
+
+function onHistorySelectChange(e) {
+    const select = e.target;
+    const chosenId = select.value;
+    if (!chosenId) return;
+
+    const history = JSON.parse(localStorage.getItem("calc_history")) || [];
+    const entry = history.find(it => it.id === chosenId);
+    if (!entry) {
+        select.value = "";
+        return;
+    }
+
+    const sizeName = sizeNameFromWorkingSize(Number(entry.working_size));
+
+    const sizeDropdown = document.querySelector('.custom-select');
+    if (sizeDropdown) {
+        sizeDropdown.value = sizeName;
+        localStorage.setItem('userSize', sizeName);
+        if (typeof selectedSize !== 'undefined') selectedSize = sizeName;
+    }
+
+    createKMap(sizeName);
+
+    const ws = Number(entry.working_size) || working_size;
+
+    const saved = Array.isArray(entry.all_cells_raw) ? entry.all_cells_raw : [];
+    all_cells_raw = Array(ws).fill(0);
+
+    for (let i = 0; i < ws; i++) {
+        const val = saved[i];
+        if (Number(val) === 1) {
+            all_cells_raw[i] = 1;
+            const cellEl = cells[`cell_${i}`] || document.getElementById(String(i));
+            if (cellEl) cellEl.classList.add("grid-checkbox-checked");
+        } else {
+            const cellEl = cells[`cell_${i}`] || document.getElementById(String(i));
+            if (cellEl) cellEl.classList.remove("grid-checkbox-checked");
+        }
+    }
+
+    select.value = "";
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    const historySelect = document.getElementById("history_select");
+    if (historySelect) {
+        historySelect.addEventListener("change", onHistorySelectChange);
+    }
+});
+
+calculate.addEventListener("click", calculator)
+clearBtn.click();
